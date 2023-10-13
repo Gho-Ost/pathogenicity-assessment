@@ -4,3 +4,7 @@
 ## Introduction and Problem Description
 
 The problem of assessing pathogenicity in genetic variants is a problem of classification. The classification system was created by The American College of Medical Genetics and Genomics and the Association for Molecular Pathology (ACMG-AMP). 5 classes can be distinguished: benign, likely benign, variant of unknown significance (VUS), likely pathogenic, and pathogenic.
+
+---
+
+[Working Documentation](https://docs.google.com/document/d/1QrPL4XlauwmgChU2wR5oaxm3lQT9XguRHlArkw-dGnk/edit?fbclid=IwAR0bLvaZl5aDMawowjTp23NeM8kCLT2UjOY_lNQLWdC-6atJqYklR94vMzc)
