@@ -1,4 +1,5 @@
 # Assessing Pathogenicity in Genetic Variants
+![images](https://github.com/Gho-Ost/pathogenicity-assessment/assets/100212265/f5215263-d2a4-4920-9f4c-de4b7a59d365)
 
 ## Introduction and Problem Description
 
