@@ -1,0 +1,297 @@
+##fileformat=VCFv4.3
+##reference=/ref/genomes/hg38/hg38.fa
+##SentieonCommandLine.TNfilter=<ID=TNfilter,Version="sentieon-genomics-202010.02",Date="2022-02-23T15:20:29Z",CommandLine="/ref/software/sentieon-202010.02/libexec/driver -r /ref/genomes/hg38/hg38.noalt.fa --algo TNfilter --tumor_sample 200852 --max_event_count 5 --min_median_pos 0 -v sentieon/tnhaplotyper.unfiltered.vcf sentieon/tnhaplotyper.filtered.vcf">
+##SentieonCommandLine.TNhaplotyper2=<ID=TNhaplotyper2,Version="sentieon-genomics-202010.02",Date="2022-02-23T15:18:32Z",CommandLine="/ref/software/sentieon-202010.02/libexec/driver -r /ref/genomes/hg38/hg38.noalt.fa -t 16 -i sample.bam --algo TNhaplotyper2 --prune_factor 5 --tumor_sample 200852 sentieon/tnhaplotyper.unfiltered.vcf">
+##tumor_sample=200852
+##VEP="v110" time="2023-10-14 09:22:23" cache="/net/isilonP/public/ro/ensweb-data/latest/tools/www/e110/vep/cache/homo_sapiens_merged/110_GRCh38" db="homo_sapiens_core_110_38@hh-mysql-ens-species-web-1" 1000genomes="phase3" COSMIC="97" ClinVar="202301" HGMD-PUBLIC="20204" assembly="GRCh38.p14" dbSNP="154" gencode="GENCODE 44" genebuild="2014-07" gnomADe="r2.1.1" gnomADg="v3.1.2" polyphen="2.2.3" refseq="110 - GCF_000001405.40_GRCh38.p14_genomic.gff" regbuild="1.0" sift="6.2.1"
+##EVE_CLASS=Classification (Benign, Uncertain, or Pathogenic) when setting 75% as uncertain
+##EVE_SCORE=Score from EVE model
+##CADD_PHRED=PHRED-like scaled CADD score. CADD is only available here for non-commercial use. See CADD website for more information.
+##CADD_RAW=Raw CADD score. CADD is only available here for non-commercial use. See CADD website for more information.
+##SpliceAI_pred_DP_AG=SpliceAI predicted effect on splicing. Delta position for acceptor gain
+##SpliceAI_pred_DP_AL=SpliceAI predicted effect on splicing. Delta position for acceptor loss
+##SpliceAI_pred_DP_DG=SpliceAI predicted effect on splicing. Delta position for donor gain
+##SpliceAI_pred_DP_DL=SpliceAI predicted effect on splicing. Delta position for donor loss
+##SpliceAI_pred_DS_AG=SpliceAI predicted effect on splicing. Delta score for acceptor gain
+##SpliceAI_pred_DS_AL=SpliceAI predicted effect on splicing. Delta score for acceptor loss
+##SpliceAI_pred_DS_DG=SpliceAI predicted effect on splicing. Delta score for donor gain
+##SpliceAI_pred_DS_DL=SpliceAI predicted effect on splicing. Delta score for donor loss
+##SpliceAI_pred_SYMBOL=SpliceAI gene symbol
+##LOEUF=Loss-of-function observed/expected upper bound fraction
+##PHENOTYPES=Phenotypes associated with overlapping genomic features
+##NMD=Nonsense-mediated mRNA decay escaping variants prediction
+##VEP-command-line='vep --af --af_1kg --af_gnomade --af_gnomadg --appris --biotype --buffer_size 500 --cache --canonical --ccds --check_existing --database 0 --dir [PATH]/cache --dir_plugins [PATH]/VEP_plugins --distance 5000 --domains --fasta_dir [PATH]/fasta --force --fork 4 --hgvs --input_file [PATH]/EE_015_BM.vcf --mane --merged --numbers --output_file [PATH]/output.vcf --plugin [PATH]/,phenotype_feature=1,exclude_sources=COSMIC&HGMD-PUBLIC&Cancer_Gene_Census --plugin NMD --polyphen b --protein --pubmed --quiet --regulatory --safe --sift b --stats_text --symbol --transcript_version --tsl --uniprot --var_synonyms --vcf'
+##INFO=<ID=ACMG_class,Number=.,Type=String,Description="Benign, Likely Benign, Uncertain Significance, Likely Pathogenic, Pathogenic">
+##INFO=<ID=ACMG_coding_impact,Number=.,Type=String,Description="Coding impact on the transcript used by the ACMG classification">
+##INFO=<ID=ACMG_gene,Number=.,Type=String,Description="HGNC gene symbol of the gene used for the ACMG classification">
+##INFO=<ID=ACMG_rules,Number=.,Type=String,Description="Rules & strengths triggered in the ACMG classification">
+##INFO=<ID=ACMG_score,Number=.,Type=Float,Description="Pathogenicity score: from 1 = Benign to >=5 = Pathogenic, use this to sort by pathogenicity, particularly useful for uncertain variants">
+##INFO=<ID=ACMG_transcript,Number=.,Type=String,Description="Transcript used by the ACMG classification">
+##INFO=<ID=AMP_matches,Number=.,Type=String,Description="Cancer & tissue type matches for this sample">
+##INFO=<ID=AMP_rules,Number=.,Type=String,Description="Rules & tiers triggered in the AMP classification">
+##INFO=<ID=AMP_score,Number=.,Type=Float,Description="Pathogenicity score: from 0 = Benign to >3 = Tier I, use this to sort by pathogenicity">
+##INFO=<ID=AMP_tier,Number=.,Type=String,Description="AMP Tier I, II, III or IV">
+##INFO=<ID=AMP_total_samples,Number=.,Type=Integer,Description="Total count of samples across somatic databases">
+##INFO=<ID=AS_FilterStatus,Number=1,Type=String,Description="Filter status for each allele, as assessed by ApplyRecalibration. Note that the VCF filter field will reflect the most lenient/sensitive status across all alleles.">
+##INFO=<ID=AS_SB_TABLE,Number=1,Type=String,Description="Allele-specific forward/reverse read counts for strand bias tests. Includes the reference and alleles separated by |.">
+##INFO=<ID=CGDinheritance,Number=.,Type=String,Description="Clinical Genomic Database inheritance">
+##INFO=<ID=ClinVarClass,Number=.,Type=Integer,Description="ClinVar class">
+##INFO=<ID=ClinVarDisease,Number=.,Type=String,Description="ClinVar disease">
+##INFO=<ID=DANN_score,Number=.,Type=String,Description="DANN score">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth; some reads may have been filtered">
+##INFO=<ID=ECNT,Number=1,Type=Integer,Description="Number of events in this haplotype">
+##INFO=<ID=GERMQ,Number=1,Type=Integer,Description="Phred-scaled quality that alt alleles are not germline variants">
+##INFO=<ID=Gene,Number=.,Type=String,Description="Gene symbol">
+##INFO=<ID=MBQ,Number=R,Type=Integer,Description="median base quality">
+##INFO=<ID=MFRL,Number=R,Type=Integer,Description="median fragment length">
+##INFO=<ID=MMQ,Number=R,Type=Integer,Description="median mapping quality">
+##INFO=<ID=MPOS,Number=A,Type=Integer,Description="median distance from end of read">
+##INFO=<ID=MutationTaster_pred,Number=.,Type=String,Description="Mutation taster prediction">
+##INFO=<ID=MutationTaster_score,Number=.,Type=String,Description="Mutation taster Score">
+##INFO=<ID=POPAF,Number=A,Type=Float,Description="negative log 10 population allele frequencies of alt alleles">
+##INFO=<ID=RPA,Number=R,Type=Integer,Description="Number of times tandem repeat unit is repeated, for each allele (including reference)">
+##INFO=<ID=RU,Number=1,Type=String,Description="Tandem repeat unit (bases)">
+##INFO=<ID=SIFT_score,Number=.,Type=String,Description="SIFT score">
+##INFO=<ID=STR,Number=0,Type=Flag,Description="Variant is a short tandem repeat">
+##INFO=<ID=STRQ,Number=1,Type=Integer,Description="Phred-scaled quality that alt alleles in STRs are not polymerase slippage errors">
+##INFO=<ID=TLOD,Number=A,Type=Float,Description="Log 10 likelihood ratio score of variant existing versus not existing">
+##INFO=<ID=coding_impact,Number=.,Type=String,Description="Coding impact">
+##INFO=<ID=cosmicFathMMPrediction,Number=1,Type=String,Description="FathMMP prediction from COSMIC">
+##INFO=<ID=cosmicFathMMScore,Number=1,Type=Float,Description="FathMMP score from COSMIC">
+##INFO=<ID=function,Number=.,Type=String,Description="Variant function within a transcript containing this variant">
+##INFO=<ID=gnomadExomesEthnic_AC_Hom,Number=A,Type=Integer,Description="gnomAD exomes ethnic homozygous count">
+##INFO=<ID=gnomadExomes_AC,Number=A,Type=Integer,Description="gnomAD exomes allele count">
+##INFO=<ID=gnomadExomes_AC_Hemi,Number=A,Type=Integer,Description="gnomAD exomes hemizygous count">
+##INFO=<ID=gnomadExomes_AC_Hom,Number=A,Type=Integer,Description="gnomAD exomes homozygous count">
+##INFO=<ID=gnomadExomes_AF,Number=A,Type=Float,Description="gnomAD exomes allele frequency">
+##INFO=<ID=gnomadExomes_AF_ethnic,Number=.,Type=Float,Description="gnomAD exomes ethnic allele frequency">
+##INFO=<ID=gnomadExomes_AN,Number=A,Type=Integer,Description="gnomAD exomes allele number">
+##INFO=<ID=gnomadGenomesAC,Number=A,Type=Integer,Description="gnomAD genomes allele count">
+##INFO=<ID=gnomadGenomesAN,Number=A,Type=Integer,Description="gnomAD genomes allele number">
+##INFO=<ID=gnomadGenomesEthnic_AC_Hom,Number=A,Type=Integer,Description="gnomAD genomes ethnic homozygous count">
+##INFO=<ID=gnomadGenomes_AC_Hemi,Number=A,Type=Integer,Description="gnomAD genomes hemizygous count">
+##INFO=<ID=gnomadGenomes_AC_Hom,Number=A,Type=Integer,Description="gnomAD genomes homozygous count">
+##INFO=<ID=gnomadGenomes_AF,Number=A,Type=Float,Description="gnomAD genomes allele frequency">
+##INFO=<ID=gnomadGenomes_AF_ethnic,Number=.,Type=Float,Description="gnomAD genomes ethnic allele frequency">
+##INFO=<ID=hgvs,Number=.,Type=String,Description="HGVS coding DNA nomenclature">
+##INFO=<ID=CSQ,Number=.,Type=String,Description="Consequence annotations from Ensembl VEP. Format: Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|UNIPROT_ISOFORM|REFSEQ_MATCH|SOURCE|REFSEQ_OFFSET|GIVEN_REF|USED_REF|BAM_EDIT|SIFT|PolyPhen|DOMAINS|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomADe_AF|gnomADe_AFR_AF|gnomADe_AMR_AF|gnomADe_ASJ_AF|gnomADe_EAS_AF|gnomADe_FIN_AF|gnomADe_NFE_AF|gnomADe_OTH_AF|gnomADe_SAS_AF|gnomADg_AF|gnomADg_AFR_AF|gnomADg_AMI_AF|gnomADg_AMR_AF|gnomADg_ASJ_AF|gnomADg_EAS_AF|gnomADg_FIN_AF|gnomADg_MID_AF|gnomADg_NFE_AF|gnomADg_OTH_AF|gnomADg_SAS_AF|CLIN_SIG|SOMATIC|PHENO|PUBMED|VAR_SYNONYMS|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|EVE_CLASS|EVE_SCORE|CADD_PHRED|CADD_RAW|SpliceAI_pred_DP_AG|SpliceAI_pred_DP_AL|SpliceAI_pred_DP_DG|SpliceAI_pred_DP_DL|SpliceAI_pred_DS_AG|SpliceAI_pred_DS_AL|SpliceAI_pred_DS_DG|SpliceAI_pred_DS_DL|SpliceAI_pred_SYMBOL|LOEUF|PHENOTYPES|NMD">
+##FORMAT=<ID=AB,Number=A,Type=Float,Description="Allelic Balance">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=AF,Number=A,Type=Float,Description="Allele fractions of alternate alleles in the tumor">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read depth">
+##FORMAT=<ID=F1R2,Number=R,Type=Integer,Description="Count of reads in F1R2 pair orientation supporting each allele">
+##FORMAT=<ID=F2R1,Number=R,Type=Integer,Description="Count of reads in F2R1 pair orientation supporting each allele">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=PGT,Number=1,Type=String,Description="Physical phasing haplotype information, describing how the alternate alleles are phased in relation to one another">
+##FORMAT=<ID=PID,Number=1,Type=String,Description="Physical phasing ID information, where each unique ID within a given sample (but not across samples) connects records within a phasing group">
+##FORMAT=<ID=PS,Number=1,Type=Integer,Description="Phasing set (typically the position of the first variant in the set)">
+##FORMAT=<ID=SB,Number=4,Type=Integer,Description="Per-sample component statistics which comprise the Fisher's Exact Test to detect strand bias.">
+##FILTER=<ID=SB,Description="Strand Bias">
+##FILTER=<ID=UM,Description="Unbalanced Mapping to the forward and reverse strands, based on a binomial test, p-value 0.05">
+##FILTER=<ID=clustered_events,Description="Clustered events observed in the tumor">
+##FILTER=<ID=fragment,Description="abs(ref - alt) median fragment length">
+##FILTER=<ID=germline,Description="Evidence indicates this site is germline, not somatic">
+##FILTER=<ID=haplotype,Description="Variant near filtered variant on same haplotype.">
+##FILTER=<ID=multiallelic,Description="Site filtered because too many alt alleles pass tumor LOD">
+##FILTER=<ID=slippage,Description="Variant near filtered variant on same haplotype.">
+##contig=<ID=chrM,length=16569>
+##contig=<ID=chr1,length=248956422>
+##contig=<ID=chr2,length=242193529>
+##contig=<ID=chr3,length=198295559>
+##contig=<ID=chr4,length=190214555>
+##contig=<ID=chr5,length=181538259>
+##contig=<ID=chr6,length=170805979>
+##contig=<ID=chr7,length=159345973>
+##contig=<ID=chr8,length=145138636>
+##contig=<ID=chr9,length=138394717>
+##contig=<ID=chr10,length=133797422>
+##contig=<ID=chr11,length=135086622>
+##contig=<ID=chr12,length=133275309>
+##contig=<ID=chr13,length=114364328>
+##contig=<ID=chr14,length=107043718>
+##contig=<ID=chr15,length=101991189>
+##contig=<ID=chr16,length=90338345>
+##contig=<ID=chr17,length=83257441>
+##contig=<ID=chr18,length=80373285>
+##contig=<ID=chr19,length=58617616>
+##contig=<ID=chr20,length=64444167>
+##contig=<ID=chr21,length=46709983>
+##contig=<ID=chr22,length=50818468>
+##contig=<ID=chrX,length=156040895>
+##contig=<ID=chrY,length=57227415>
+##contig=<ID=chr1_KI270706v1_random,length=175055>
+##contig=<ID=chr1_KI270707v1_random,length=32032>
+##contig=<ID=chr1_KI270708v1_random,length=127682>
+##contig=<ID=chr1_KI270709v1_random,length=66860>
+##contig=<ID=chr1_KI270710v1_random,length=40176>
+##contig=<ID=chr1_KI270711v1_random,length=42210>
+##contig=<ID=chr1_KI270712v1_random,length=176043>
+##contig=<ID=chr1_KI270713v1_random,length=40745>
+##contig=<ID=chr1_KI270714v1_random,length=41717>
+##contig=<ID=chr2_KI270715v1_random,length=161471>
+##contig=<ID=chr2_KI270716v1_random,length=153799>
+##contig=<ID=chr3_GL000221v1_random,length=155397>
+##contig=<ID=chr4_GL000008v2_random,length=209709>
+##contig=<ID=chr5_GL000208v1_random,length=92689>
+##contig=<ID=chr9_KI270717v1_random,length=40062>
+##contig=<ID=chr9_KI270718v1_random,length=38054>
+##contig=<ID=chr9_KI270719v1_random,length=176845>
+##contig=<ID=chr9_KI270720v1_random,length=39050>
+##contig=<ID=chr11_KI270721v1_random,length=100316>
+##contig=<ID=chr14_GL000009v2_random,length=201709>
+##contig=<ID=chr14_GL000194v1_random,length=191469>
+##contig=<ID=chr14_GL000225v1_random,length=211173>
+##contig=<ID=chr14_KI270722v1_random,length=194050>
+##contig=<ID=chr14_KI270723v1_random,length=38115>
+##contig=<ID=chr14_KI270724v1_random,length=39555>
+##contig=<ID=chr14_KI270725v1_random,length=172810>
+##contig=<ID=chr14_KI270726v1_random,length=43739>
+##contig=<ID=chr15_KI270727v1_random,length=448248>
+##contig=<ID=chr16_KI270728v1_random,length=1872759>
+##contig=<ID=chr17_GL000205v2_random,length=185591>
+##contig=<ID=chr17_KI270729v1_random,length=280839>
+##contig=<ID=chr17_KI270730v1_random,length=112551>
+##contig=<ID=chr22_KI270731v1_random,length=150754>
+##contig=<ID=chr22_KI270732v1_random,length=41543>
+##contig=<ID=chr22_KI270733v1_random,length=179772>
+##contig=<ID=chr22_KI270734v1_random,length=165050>
+##contig=<ID=chr22_KI270735v1_random,length=42811>
+##contig=<ID=chr22_KI270736v1_random,length=181920>
+##contig=<ID=chr22_KI270737v1_random,length=103838>
+##contig=<ID=chr22_KI270738v1_random,length=99375>
+##contig=<ID=chr22_KI270739v1_random,length=73985>
+##contig=<ID=chrY_KI270740v1_random,length=37240>
+##contig=<ID=chrUn_GL000195v1,length=182896>
+##contig=<ID=chrUn_GL000213v1,length=164239>
+##contig=<ID=chrUn_GL000214v1,length=137718>
+##contig=<ID=chrUn_GL000216v2,length=176608>
+##contig=<ID=chrUn_GL000218v1,length=161147>
+##contig=<ID=chrUn_GL000219v1,length=179198>
+##contig=<ID=chrUn_GL000220v1,length=161802>
+##contig=<ID=chrUn_GL000224v1,length=179693>
+##contig=<ID=chrUn_GL000226v1,length=15008>
+##contig=<ID=chrUn_KI270302v1,length=2274>
+##contig=<ID=chrUn_KI270303v1,length=1942>
+##contig=<ID=chrUn_KI270304v1,length=2165>
+##contig=<ID=chrUn_KI270305v1,length=1472>
+##contig=<ID=chrUn_KI270310v1,length=1201>
+##contig=<ID=chrUn_KI270311v1,length=12399>
+##contig=<ID=chrUn_KI270312v1,length=998>
+##contig=<ID=chrUn_KI270315v1,length=2276>
+##contig=<ID=chrUn_KI270316v1,length=1444>
+##contig=<ID=chrUn_KI270317v1,length=37690>
+##contig=<ID=chrUn_KI270320v1,length=4416>
+##contig=<ID=chrUn_KI270322v1,length=21476>
+##contig=<ID=chrUn_KI270329v1,length=1040>
+##contig=<ID=chrUn_KI270330v1,length=1652>
+##contig=<ID=chrUn_KI270333v1,length=2699>
+##contig=<ID=chrUn_KI270334v1,length=1368>
+##contig=<ID=chrUn_KI270335v1,length=1048>
+##contig=<ID=chrUn_KI270336v1,length=1026>
+##contig=<ID=chrUn_KI270337v1,length=1121>
+##contig=<ID=chrUn_KI270338v1,length=1428>
+##contig=<ID=chrUn_KI270340v1,length=1428>
+##contig=<ID=chrUn_KI270362v1,length=3530>
+##contig=<ID=chrUn_KI270363v1,length=1803>
+##contig=<ID=chrUn_KI270364v1,length=2855>
+##contig=<ID=chrUn_KI270366v1,length=8320>
+##contig=<ID=chrUn_KI270371v1,length=2805>
+##contig=<ID=chrUn_KI270372v1,length=1650>
+##contig=<ID=chrUn_KI270373v1,length=1451>
+##contig=<ID=chrUn_KI270374v1,length=2656>
+##contig=<ID=chrUn_KI270375v1,length=2378>
+##contig=<ID=chrUn_KI270376v1,length=1136>
+##contig=<ID=chrUn_KI270378v1,length=1048>
+##contig=<ID=chrUn_KI270379v1,length=1045>
+##contig=<ID=chrUn_KI270381v1,length=1930>
+##contig=<ID=chrUn_KI270382v1,length=4215>
+##contig=<ID=chrUn_KI270383v1,length=1750>
+##contig=<ID=chrUn_KI270384v1,length=1658>
+##contig=<ID=chrUn_KI270385v1,length=990>
+##contig=<ID=chrUn_KI270386v1,length=1788>
+##contig=<ID=chrUn_KI270387v1,length=1537>
+##contig=<ID=chrUn_KI270388v1,length=1216>
+##contig=<ID=chrUn_KI270389v1,length=1298>
+##contig=<ID=chrUn_KI270390v1,length=2387>
+##contig=<ID=chrUn_KI270391v1,length=1484>
+##contig=<ID=chrUn_KI270392v1,length=971>
+##contig=<ID=chrUn_KI270393v1,length=1308>
+##contig=<ID=chrUn_KI270394v1,length=970>
+##contig=<ID=chrUn_KI270395v1,length=1143>
+##contig=<ID=chrUn_KI270396v1,length=1880>
+##contig=<ID=chrUn_KI270411v1,length=2646>
+##contig=<ID=chrUn_KI270412v1,length=1179>
+##contig=<ID=chrUn_KI270414v1,length=2489>
+##contig=<ID=chrUn_KI270417v1,length=2043>
+##contig=<ID=chrUn_KI270418v1,length=2145>
+##contig=<ID=chrUn_KI270419v1,length=1029>
+##contig=<ID=chrUn_KI270420v1,length=2321>
+##contig=<ID=chrUn_KI270422v1,length=1445>
+##contig=<ID=chrUn_KI270423v1,length=981>
+##contig=<ID=chrUn_KI270424v1,length=2140>
+##contig=<ID=chrUn_KI270425v1,length=1884>
+##contig=<ID=chrUn_KI270429v1,length=1361>
+##contig=<ID=chrUn_KI270435v1,length=92983>
+##contig=<ID=chrUn_KI270438v1,length=112505>
+##contig=<ID=chrUn_KI270442v1,length=392061>
+##contig=<ID=chrUn_KI270448v1,length=7992>
+##contig=<ID=chrUn_KI270465v1,length=1774>
+##contig=<ID=chrUn_KI270466v1,length=1233>
+##contig=<ID=chrUn_KI270467v1,length=3920>
+##contig=<ID=chrUn_KI270468v1,length=4055>
+##contig=<ID=chrUn_KI270507v1,length=5353>
+##contig=<ID=chrUn_KI270508v1,length=1951>
+##contig=<ID=chrUn_KI270509v1,length=2318>
+##contig=<ID=chrUn_KI270510v1,length=2415>
+##contig=<ID=chrUn_KI270511v1,length=8127>
+##contig=<ID=chrUn_KI270512v1,length=22689>
+##contig=<ID=chrUn_KI270515v1,length=6361>
+##contig=<ID=chrUn_KI270516v1,length=1300>
+##contig=<ID=chrUn_KI270517v1,length=3253>
+##contig=<ID=chrUn_KI270518v1,length=2186>
+##contig=<ID=chrUn_KI270519v1,length=138126>
+##contig=<ID=chrUn_KI270521v1,length=7642>
+##contig=<ID=chrUn_KI270522v1,length=5674>
+##contig=<ID=chrUn_KI270528v1,length=2983>
+##contig=<ID=chrUn_KI270529v1,length=1899>
+##contig=<ID=chrUn_KI270530v1,length=2168>
+##contig=<ID=chrUn_KI270538v1,length=91309>
+##contig=<ID=chrUn_KI270539v1,length=993>
+##contig=<ID=chrUn_KI270544v1,length=1202>
+##contig=<ID=chrUn_KI270548v1,length=1599>
+##contig=<ID=chrUn_KI270579v1,length=31033>
+##contig=<ID=chrUn_KI270580v1,length=1553>
+##contig=<ID=chrUn_KI270581v1,length=7046>
+##contig=<ID=chrUn_KI270582v1,length=6504>
+##contig=<ID=chrUn_KI270583v1,length=1400>
+##contig=<ID=chrUn_KI270584v1,length=4513>
+##contig=<ID=chrUn_KI270587v1,length=2969>
+##contig=<ID=chrUn_KI270588v1,length=6158>
+##contig=<ID=chrUn_KI270589v1,length=44474>
+##contig=<ID=chrUn_KI270590v1,length=4685>
+##contig=<ID=chrUn_KI270591v1,length=5796>
+##contig=<ID=chrUn_KI270593v1,length=3041>
+##contig=<ID=chrUn_KI270741v1,length=157432>
+##contig=<ID=chrUn_KI270742v1,length=186739>
+##contig=<ID=chrUn_KI270743v1,length=210658>
+##contig=<ID=chrUn_KI270744v1,length=168472>
+##contig=<ID=chrUn_KI270745v1,length=41891>
+##contig=<ID=chrUn_KI270746v1,length=66486>
+##contig=<ID=chrUn_KI270747v1,length=198735>
+##contig=<ID=chrUn_KI270748v1,length=93321>
+##contig=<ID=chrUn_KI270749v1,length=158759>
+##contig=<ID=chrUn_KI270750v1,length=148850>
+##contig=<ID=chrUn_KI270751v1,length=150742>
+##contig=<ID=chrUn_KI270752v1,length=27745>
+##contig=<ID=chrUn_KI270753v1,length=62944>
+##contig=<ID=chrUn_KI270754v1,length=40191>
+##contig=<ID=chrUn_KI270755v1,length=36723>
+##contig=<ID=chrUn_KI270756v1,length=79590>
+##contig=<ID=chrUn_KI270757v1,length=71251>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	200852
+chr1	15820	rs2691315	G	T	.	PASS	ACMG_class=Uncertain%40Significance;ACMG_coding_impact=non%40coding;ACMG_rules=BP4;ACMG_score=0.193;AMP_matches=V;AMP_rules=Freq_II%2CType_IV%2CPred_IV;AMP_tier=Tier%40IV;AMP_total_samples=0;AS_FilterStatus=SITE;AS_SB_TABLE=12%2C23|7%2C2;DP=45;ECNT=1;GERMQ=55;Gene=WASH7P;MBQ=29;MFRL=219;MMQ=34;MPOS=30;POPAF=7.3;TLOD=10.9;function=non-coding%40exon;gnomadGenomesAC=18059;gnomadGenomesAN=82218;gnomadGenomesEthnic_AC_Hom=233;gnomadGenomes_AC_Hom=18059;gnomadGenomes_AF=0.219648;gnomadGenomes_AF_ethnic=0.0938074;CSQ=T|downstream_gene_variant|MODIFIER|DDX11L1|ENSG00000223972|Transcript|ENST00000450305.2|transcribed_unprocessed_pseudogene||||||||||rs2691315|2150|1||HGNC|HGNC:37102|YES||||||||||||Ensembl||G|G||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|downstream_gene_variant|MODIFIER|DDX11L2|ENSG00000290825|Transcript|ENST00000456328.2|lncRNA||||||||||rs2691315|1411|1||EntrezGene||YES|||1|||||||||Ensembl||G|G||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|non_coding_transcript_exon_variant|MODIFIER|WASH7P|ENSG00000227232|Transcript|ENST00000488147.1|unprocessed_pseudogene|9/11||ENST00000488147.1:n.1195C>A||1195|||||rs2691315||-1||HGNC|HGNC:38034|YES||||||||||||Ensembl||G|G||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|downstream_gene_variant|MODIFIER|MIR6859-1|ENSG00000278267|Transcript|ENST00000619216.1|miRNA||||||||||rs2691315|1549|-1||HGNC|HGNC:50039|YES||||||||||||Ensembl||G|G||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|non_coding_transcript_exon_variant|MODIFIER|WASH7P|653635|Transcript|NR_024540.1|transcribed_pseudogene|9/11||NR_024540.1:n.1208C>A||1208|||||rs2691315||-1||EntrezGene|HGNC:38034|YES||||||||||||RefSeq||G|G|OK|||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|downstream_gene_variant|MODIFIER|DDX11L1|100287102|Transcript|NR_046018.2|transcribed_pseudogene||||||||||rs2691315|1411|1||EntrezGene|HGNC:37102|YES||||||||||||RefSeq||G|G||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|downstream_gene_variant|MODIFIER|MIR6859-1|102466751|Transcript|NR_106918.1|miRNA||||||||||rs2691315|1549|-1||EntrezGene|HGNC:50039|YES||||||||||||RefSeq||G|G||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|regulatory_region_variant|MODIFIER|||RegulatoryFeature|ENSR00000344266|CTCF_binding_site||||||||||rs2691315|||||||||||||||||||||||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|regulatory_region_variant|MODIFIER|||RegulatoryFeature|ENSR00001164745|enhancer||||||||||rs2691315|||||||||||||||||||||||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329|||||||||||||16.02|1.543896||||||||||||,T|TF_binding_site_variant|MODIFIER|||MotifFeature|ENSM00000173493|||||||||||rs2691315||1|||||||||||||||||||||||||0.4105|0.4849|0.2939|0.6052|0.2714|0.3354||||||||||0.2196|0.4324|0.1146|0.1638|0.1285|0.06176|0.06299|0.2151|0.09381|0.2235|0.1329||||||ENSPFM0042|17|N|-0.005|CTCF|||16.02|1.543896||||||||||||	GT:AB:AD:AF:DP:F1R2:F2R1:SB	0/1:0.204545:35,9:0.21:44:20,6:15,2:12,23,7,2
+chr1	17385	rs201535981	G	A	.	PASS	ACMG_class=Uncertain%40Significance;ACMG_coding_impact=non%40coding;ACMG_rules=BP4;ACMG_score=-0.047;AMP_matches=;AMP_rules=Type_IV%2CPred_IV;AMP_tier=Tier%40IV;AMP_total_samples=0;AS_FilterStatus=SITE;AS_SB_TABLE=37%2C9|17%2C6;DP=70;ECNT=1;GERMQ=37;Gene=MIR6859-1,WASH7P;MBQ=29;MFRL=293;MMQ=40;MPOS=19;POPAF=7.3;TLOD=45.3;function=non-coding%40exon,intronic;gnomadExomesEthnic_AC_Hom=2;gnomadExomes_AC=9331;gnomadExomes_AC_Hom=9331;gnomadExomes_AF=0.173001;gnomadExomes_AF_ethnic=0.199722;gnomadExomes_AN=53936;gnomadGenomesAC=21384;gnomadGenomesAN=111582;gnomadGenomesEthnic_AC_Hom=1;gnomadGenomes_AC_Hom=21384;gnomadGenomes_AF=0.191644;gnomadGenomes_AF_ethnic=0.213724;CSQ=A|downstream_gene_variant|MODIFIER|DDX11L1|ENSG00000223972|Transcript|ENST00000450305.2|transcribed_unprocessed_pseudogene||||||||||rs201535981|3715|1||HGNC|HGNC:37102|YES||||||||||||Ensembl||G|G||||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||,A|downstream_gene_variant|MODIFIER|DDX11L2|ENSG00000290825|Transcript|ENST00000456328.2|lncRNA||||||||||rs201535981|2976|1||EntrezGene||YES|||1|||||||||Ensembl||G|G||||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||,A|splice_polypyrimidine_tract_variant&intron_variant&non_coding_transcript_variant|LOW|WASH7P|ENSG00000227232|Transcript|ENST00000488147.1|unprocessed_pseudogene||5/10|ENST00000488147.1:n.575-17C>T|||||||rs201535981||-1||HGNC|HGNC:38034|YES||||||||||||Ensembl||G|G||||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||,A|mature_miRNA_variant|MODIFIER|MIR6859-1|ENSG00000278267|Transcript|ENST00000619216.1|miRNA|1/1||ENST00000619216.1:n.52C>T||52|||||rs201535981||-1||HGNC|HGNC:50039|YES||||||||||||Ensembl||G|G||||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||,A|splice_polypyrimidine_tract_variant&intron_variant&non_coding_transcript_variant|LOW|WASH7P|653635|Transcript|NR_024540.1|transcribed_pseudogene||5/10|NR_024540.1:n.588-17C>T|||||||rs201535981||-1||EntrezGene|HGNC:38034|YES||||||||||||RefSeq||G|G|OK|||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||,A|downstream_gene_variant|MODIFIER|DDX11L1|100287102|Transcript|NR_046018.2|transcribed_pseudogene||||||||||rs201535981|2976|1||EntrezGene|HGNC:37102|YES||||||||||||RefSeq||G|G||||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||,A|non_coding_transcript_exon_variant|MODIFIER|MIR6859-1|102466751|Transcript|NR_106918.1|miRNA|1/1||NR_106918.1:n.52C>T||52|||||rs201535981||-1||EntrezGene|HGNC:50039|YES||||||||||||RefSeq||G|G||||||||||||0.173|0.1443|0.2215|0.2532|0.02807|0.207|0.1997|0.1992|0.1629|0.1916|0.1547|0.2446|0.2082|0.261|0.03913|0.2582|0.2822|0.2137|0.2152|0.1667|||||||||||||7.934|0.644040||||||||||||	GT:AB:AD:AF:DP:F1R2:F2R1:SB	0/1:0.333333:46,23:0.336:69:28,10:17,12:37,9,17,6
+chr1	17697	rs71260069	G	C	.	PASS	ACMG_class=Benign;ACMG_coding_impact=non%40coding;ACMG_rules=BA1%2CBP4;ACMG_score=0.193;AMP_matches=E%2CV;AMP_rules=Freq_II%2CType_IV%2CPred_IV;AMP_tier=Tier%40IV;AMP_total_samples=0;AS_FilterStatus=SITE;AS_SB_TABLE=0%2C39|0%2C8;DP=49;ECNT=1;GERMQ=67;Gene=MIR6859-1,WASH7P;MBQ=29;MFRL=331;MMQ=40;MPOS=17;POPAF=7.3;TLOD=13.2;function=5'flank,non-coding%40exon;gnomadGenomesAC=17539;gnomadGenomesAN=116050;gnomadGenomesEthnic_AC_Hom=2;gnomadGenomes_AC_Hom=17539;gnomadGenomes_AF=0.151133;gnomadGenomes_AF_ethnic=0.178196;CSQ=C|downstream_gene_variant|MODIFIER|DDX11L1|ENSG00000223972|Transcript|ENST00000450305.2|transcribed_unprocessed_pseudogene||||||||||rs71260069|4027|1||HGNC|HGNC:37102|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||,C|downstream_gene_variant|MODIFIER|DDX11L2|ENSG00000290825|Transcript|ENST00000456328.2|lncRNA||||||||||rs71260069|3288|1||EntrezGene||YES|||1|||||||||Ensembl||G|G|||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||,C|non_coding_transcript_exon_variant|MODIFIER|WASH7P|ENSG00000227232|Transcript|ENST00000488147.1|unprocessed_pseudogene|5/11||ENST00000488147.1:n.483C>G||483|||||rs71260069||-1||HGNC|HGNC:38034|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||,C|upstream_gene_variant|MODIFIER|MIR6859-1|ENSG00000278267|Transcript|ENST00000619216.1|miRNA||||||||||rs71260069|261|-1||HGNC|HGNC:50039|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||,C|non_coding_transcript_exon_variant|MODIFIER|WASH7P|653635|Transcript|NR_024540.1|transcribed_pseudogene|5/11||NR_024540.1:n.496C>G||496|||||rs71260069||-1||EntrezGene|HGNC:38034|YES||||||||||||RefSeq||G|G|OK||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||,C|downstream_gene_variant|MODIFIER|DDX11L1|100287102|Transcript|NR_046018.2|transcribed_pseudogene||||||||||rs71260069|3288|1||EntrezGene|HGNC:37102|YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||,C|upstream_gene_variant|MODIFIER|MIR6859-1|102466751|Transcript|NR_106918.1|miRNA||||||||||rs71260069|261|-1||EntrezGene|HGNC:50039|YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.1511|0.1238|0.0654|0.1197|0.1641|0.02216|0.2241|0.196|0.1782|0.1404|0.1298|||||||||||||12.16|1.043489||||||||||||	GT:AB:AD:AF:DP:F1R2:F2R1:SB	0/1:0.170213:39,8:0.176:47:21,4:17,3:0,39,0,8
+chr1	133129	rs367730352	G	A	.	PASS	ACMG_class=Uncertain%40Significance;ACMG_coding_impact=non%40coding;ACMG_rules=BP4;ACMG_score=-0.047;AMP_matches=;AMP_rules=Type_IV%2CPred_IV;AMP_tier=Tier%40IV;AMP_total_samples=0;AS_FilterStatus=SITE;AS_SB_TABLE=0%2C0|18%2C2;DP=22;ECNT=1;GERMQ=92;Gene=CICP27,ENSG00000238009;MBQ=27;MFRL=348;MMQ=33;MPOS=20;POPAF=7.3;TLOD=57.1;function=non-coding%40exon,intronic;gnomadGenomesAC=72154;gnomadGenomesAN=131698;gnomadGenomesEthnic_AC_Hom=7468;gnomadGenomes_AC_Hom=72154;gnomadGenomes_AF=0.547875;gnomadGenomes_AF_ethnic=0.597389;CSQ=A|non_coding_transcript_exon_variant|MODIFIER|CICP27|ENSG00000233750|Transcript|ENST00000442987.3|processed_pseudogene|1/1||ENST00000442987.3:n.2105G>A||2105|||||rs367730352||1||HGNC|HGNC:48835|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|intron_variant&non_coding_transcript_variant|MODIFIER||ENSG00000238009|Transcript|ENST00000453576.2|lncRNA||1/1|ENST00000453576.2:n.193+245C>T|||||||rs367730352||-1|||||||2|||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|upstream_gene_variant|MODIFIER||ENSG00000238009|Transcript|ENST00000471248.1|lncRNA||||||||||rs367730352|3956|-1|||||||5|||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|upstream_gene_variant|MODIFIER||ENSG00000238009|Transcript|ENST00000477740.5|lncRNA||||||||||rs367730352|3912|-1||||YES|||5|||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|downstream_gene_variant|MODIFIER||ENSG00000268903|Transcript|ENST00000494149.2|processed_pseudogene||||||||||rs367730352|2012|-1||||YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|downstream_gene_variant|MODIFIER||ENSG00000269981|Transcript|ENST00000595919.1|processed_pseudogene||||||||||rs367730352|4553|-1||||YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|intron_variant&non_coding_transcript_variant|MODIFIER||ENSG00000238009|Transcript|ENST00000610542.1|lncRNA||1/3|ENST00000610542.1:n.350+245C>T|||||||rs367730352||-1|||||||5|||||||||Ensembl||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|downstream_gene_variant|MODIFIER|LOC729737|729737|Transcript|NR_039983.2|lncRNA||||||||||rs367730352|1644|-1||EntrezGene||YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||,A|intron_variant&non_coding_transcript_variant|MODIFIER|LOC124900384|124900384|Transcript|XR_001737579.3|lncRNA||5/5|XR_001737579.3:n.1968-12197C>T|||||||rs367730352||-1||EntrezGene||YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.5479|0.4621|0.5467|0.5007|0.5689|0.4942|0.6321|0.5|0.5974|0.5382|0.5257|||||||||||||5.750|0.429409||||||||||||	GT:AB:AD:AF:DP:F1R2:F2R1:SB	0/1:1.0:0,20:0.956:20:0,9:0,11:0,0,18,2
+chr1	183629	rs71267774	G	A	.	PASS	ACMG_class=Benign;ACMG_coding_impact=non%40coding;ACMG_rules=BA1%2CBP4;ACMG_score=0.193;AMP_matches=E%2CV;AMP_rules=Freq_II%2CType_IV%2CPred_IV;AMP_tier=Tier%40IV;AMP_total_samples=0;AS_FilterStatus=SITE;AS_SB_TABLE=50%2C53|19%2C14;DP=139;ECNT=4;GERMQ=93;Gene=DDX11L17;MBQ=29;MFRL=366;MMQ=46;MPOS=29;POPAF=7.3;TLOD=68.5;function=intronic;gnomadGenomesAC=14902;gnomadGenomesAN=111796;gnomadGenomesEthnic_AC_Hom=1;gnomadGenomes_AC_Hom=14902;gnomadGenomes_AF=0.133296;gnomadGenomes_AF_ethnic=0.220891;CSQ=A|downstream_gene_variant|MODIFIER|MIR6859-2|ENSG00000273874|Transcript|ENST00000612080.1|miRNA||||||||||rs71267774|4262|-1||HGNC|HGNC:49954|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|downstream_gene_variant|MODIFIER|WASH9P|ENSG00000279457|Transcript|ENST00000623083.4|unprocessed_pseudogene||||||||||rs71267774|1588|-1||HGNC|HGNC:53981|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|intron_variant&non_coding_transcript_variant|MODIFIER|DDX11L17|ENSG00000279928|Transcript|ENST00000624431.2|unprocessed_pseudogene||3/4|ENST00000624431.2:n.214+58G>A|||||||rs71267774||1||HGNC|HGNC:55080|YES||||||||||||Ensembl||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|intron_variant&non_coding_transcript_variant|MODIFIER|DDX11L17|102725121|Transcript|NR_148357.1|transcribed_pseudogene||2/2|NR_148357.1:n.469-111G>A|||||||rs71267774||1||EntrezGene|HGNC:55080|YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|downstream_gene_variant|MODIFIER|LOC100996442|100996442|Transcript|XR_007065318.1|lncRNA||||||||||rs71267774|1287|-1||EntrezGene||YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|upstream_gene_variant|MODIFIER|LOC124903814|124903814|Transcript|XR_007065332.1|lncRNA||||||||||rs71267774|3524|-1||EntrezGene||YES||||||||||||RefSeq||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|upstream_gene_variant|MODIFIER|LOC124903814|124903814|Transcript|XR_007065333.1|lncRNA||||||||||rs71267774|3524|-1||EntrezGene||||||||||||||RefSeq||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||,A|upstream_gene_variant|MODIFIER|LOC124903814|124903814|Transcript|XR_007065334.1|lncRNA||||||||||rs71267774|3524|-1||EntrezGene||||||||||||||RefSeq||G|G|||||||||||||||||||||0.1333|0.03798|0.1565|0.1196|0.1272|0.01827|0.2103|0.1154|0.2209|0.1247|0.1071|||||||||||||0.798|-0.107991||||||||||||	GT:AB:AD:AF:DP:F1R2:F2R1:SB	0/1:0.242647:103,33:0.246:136:46,14:55,18:50,53,19,14
+chr1	184267	rs1396210256	C	T	.	PASS	ACMG_class=Likely%40Benign;ACMG_coding_impact=non%40coding;ACMG_rules=BS1%2CBP4;ACMG_score=0.193;AMP_matches=E%2CV;AMP_rules=Freq_II%2CType_IV%2CPred_IV;AMP_tier=Tier%40IV;AMP_total_samples=0;AS_FilterStatus=SITE;AS_SB_TABLE=32%2C33|3%2C4;DP=78;ECNT=1;GERMQ=93;Gene=DDX11L17;MBQ=28;MFRL=237;MMQ=39;MPOS=13;POPAF=7.3;TLOD=11.4;function=non-coding%40exon,3'flank;gnomadGenomesAC=887;gnomadGenomesAN=144780;gnomadGenomesEthnic_AC_Hom=0;gnomadGenomes_AC_Hom=887;gnomadGenomes_AF=0.00612654;gnomadGenomes_AF_ethnic=0.00631038;CSQ=T|downstream_gene_variant|MODIFIER|MIR6859-2|ENSG00000273874|Transcript|ENST00000612080.1|miRNA||||||||||rs1396210256|3624|-1||HGNC|HGNC:49954|YES||||||||||||Ensembl||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|downstream_gene_variant|MODIFIER|WASH9P|ENSG00000279457|Transcript|ENST00000623083.4|unprocessed_pseudogene||||||||||rs1396210256|950|-1||HGNC|HGNC:53981|YES||||||||||||Ensembl||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|downstream_gene_variant|MODIFIER|DDX11L17|ENSG00000279928|Transcript|ENST00000624431.2|unprocessed_pseudogene||||||||||rs1396210256|93|1||HGNC|HGNC:55080|YES||||||||||||Ensembl||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|non_coding_transcript_exon_variant|MODIFIER|DDX11L17|102725121|Transcript|NR_148357.1|transcribed_pseudogene|3/3||NR_148357.1:n.996C>T||996|||||rs1396210256||1||EntrezGene|HGNC:55080|YES||||||||||||RefSeq||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|downstream_gene_variant|MODIFIER|LOC100996442|100996442|Transcript|XR_007065318.1|lncRNA||||||||||rs1396210256|649|-1||EntrezGene||YES||||||||||||RefSeq||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|upstream_gene_variant|MODIFIER|LOC124903814|124903814|Transcript|XR_007065332.1|lncRNA||||||||||rs1396210256|4162|-1||EntrezGene||YES||||||||||||RefSeq||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|upstream_gene_variant|MODIFIER|LOC124903814|124903814|Transcript|XR_007065333.1|lncRNA||||||||||rs1396210256|4162|-1||EntrezGene||||||||||||||RefSeq||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||,T|upstream_gene_variant|MODIFIER|LOC124903814|124903814|Transcript|XR_007065334.1|lncRNA||||||||||rs1396210256|4162|-1||EntrezGene||||||||||||||RefSeq||C|C|||||||||||||||||||||0.006127|0.002936|0.01439|0.007364|0.009034|0.0006326|0.01197|0.01316|0.00631|0.006972|0.01678|||||||||||||1.100|-0.040819||||||||||||	GT:AB:AD:AF:DP:F1R2:F2R1:SB	0/1:0.0972222:65,7:0.108:72:34,3:27,4:32,33,3,4
