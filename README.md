@@ -7,4 +7,10 @@ The problem of assessing pathogenicity in genetic variants is a problem of class
 
 ---
 
+Raw data format (vcf) specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
+
+---
+
 [Working Documentation](https://docs.google.com/document/d/1QrPL4XlauwmgChU2wR5oaxm3lQT9XguRHlArkw-dGnk/edit?fbclid=IwAR0bLvaZl5aDMawowjTp23NeM8kCLT2UjOY_lNQLWdC-6atJqYklR94vMzc)
+
+---
