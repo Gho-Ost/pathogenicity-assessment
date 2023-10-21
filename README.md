@@ -35,7 +35,7 @@ df = pd.read_csv("data/EE_015/EE_015_csq.csv.gz", sep=";", compression="gzip")
           └───EE_069_csq.csv.gz
 ```
 
-EE_sample contains uncompressed files
+*EE_sample contains uncompressed files
 
 ---
 
