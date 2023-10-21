@@ -11,20 +11,31 @@ The problem of assessing pathogenicity in genetic variants is a problem of class
 
 Raw data format (vcf) specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
 
+To read .csv converted data: 
+
+```py
+df = pd.read_csv("data/EE_015/EE_015_csq.csv.gz", sep=";", compression="gzip")
+```
+
 ---
 
 ## File structure
 
 ```
+
+└───archive
 └───data
+    ├───EE_sample*
     ├───EE_015
     ├───EE_050
-    ├───EE_069
-    └───EE_sample
-          ├───EE_sample.vcf
-          ├───EE_sample.csv
-          └───EE_sample_csq.csv
+    └───EE_069
+          ├───EE_069.vcf.gz
+          ├───EE_069_default.csv.gz
+          ├───EE_069_genotype.csv.gz
+          └───EE_069_csq.csv.gz
 ```
+
+EE_sample contains uncompressed files
 
 ---
 
