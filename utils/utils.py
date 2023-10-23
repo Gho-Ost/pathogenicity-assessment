@@ -5,11 +5,11 @@ Module for custom utility functions.
 import pandas as pd
 from pathlib import Path
 
-def get_data(sample_folder_path, file_types=["default", "csq", "genotype"]):
+def get_data(sample_folder_path, file_types=None):
     types = ["default", "csq", "genotype"]
     samples = ["EE_015", "EE_050", "EE_069"]
 
-    if file_types == []:
+    if file_types is None:
         raise Exception(f"No file types provided") 
 
     for f_type in file_types:
@@ -27,8 +27,8 @@ def get_data(sample_folder_path, file_types=["default", "csq", "genotype"]):
     
     df = pd.read_csv(folder_path / f"{sample}_{file_types[0]}.csv.gz", sep=";", compression="gzip").drop("Unnamed: 0", axis=1)
     for f_type in file_types[1:]:
-        df2 = pd.read_csv(folder_path / f"{sample}_{f_type}.csv.gz", sep=";", compression="gzip")
-        df = pd.concat([df, df2.drop("Unnamed: 0", axis=1)], axis=1, ignore_index=False)
+        df2 = pd.read_csv(folder_path / f"{sample}_{f_type}.csv.gz", sep=";", compression="gzip").drop("Unnamed: 0", axis=1)
+        df = pd.concat([df, df2], axis=1, ignore_index=False)
         
     return df
 
