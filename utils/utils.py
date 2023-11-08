@@ -6,6 +6,16 @@ import pandas as pd
 from pathlib import Path
 
 def get_data(sample_folder_path, file_types=None):
+    """
+    Usage example:
+    
+    from utils.utils import get_data
+    
+    EE_015 = get_data("data/EE_015/", ["default", "csq"])
+    EE_050 = get_data("data/EE_050/", ["default", "csq"])
+    EE_069 = get_data("data/EE_069/", ["default", "csq"])
+    df = pd.concat([EE_015, EE_050, EE_069], ignore_index=True, axis=0)
+    """
     types = ["default", "csq", "genotype"]
     samples = ["EE_015", "EE_050", "EE_069"]
 
