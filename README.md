@@ -14,7 +14,13 @@ Raw data format (vcf) specification: https://samtools.github.io/hts-specs/VCFv4.
 To read .csv converted data: 
 
 ```py
-df = pd.read_csv("data/EE_015/EE_015_csq.csv.gz", sep=";", compression="gzip")
+from utils.utils import get_data
+
+EE_015 = get_data("data/EE_015/", ["default", "csq"])
+EE_050 = get_data("data/EE_050/", ["default", "csq"])
+EE_069 = get_data("data/EE_069/", ["default", "csq"])
+
+df = pd.concat([EE_015, EE_050, EE_069], ignore_index=True, axis=0)
 ```
 
 ---
