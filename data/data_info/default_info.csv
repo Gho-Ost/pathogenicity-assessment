@@ -1,0 +1,8 @@
+id,col_name,dtype,unique,nans
+0,#CHROM,object,76,0
+1,POS,int64,275143,0
+2,ID,object,271138,0
+3,REF,object,3555,0
+4,ALT,object,2881,0
+5,QUAL,object,9986,304270
+6,FILTER,object,112,0
