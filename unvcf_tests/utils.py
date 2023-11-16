@@ -48,3 +48,6 @@ def get_data(sample_folder_path, file_types=None):
         df = pd.concat([df, df2], axis=1, ignore_index=False)
         
     return df
+
+        
+    
