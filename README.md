@@ -18,11 +18,8 @@ To read .csv converted data:
 ```py
 from utils.utils import get_data
 
-EE_015 = get_data("data/EE_015/", ["default", "csq"])
-EE_050 = get_data("data/EE_050/", ["default", "csq"])
-EE_069 = get_data("data/EE_069/", ["default", "csq"])
-
-df = pd.concat([EE_015, EE_050, EE_069], ignore_index=True, axis=0)
+df = get_dataset("../data/", samples=["EE_015", "EE_050", "EE_069"], file_types=["default", "genotype", "csq"], option_csq="potential", 
+            options_genotype=["potential", "all"])
 ```
 
 ---
