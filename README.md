@@ -11,7 +11,7 @@ The problem of assessing pathogenicity in genetic variants is a problem of class
 
 Raw data format (vcf) specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
 
-VEP (CSQ) outputs: http://www.ensembl.org/info/docs/tools/vep/vep_formats.html#vcfout
+VEP (CSQ) outputs: http://www.ensembl.org/info/docs/tools/vep/vep_formats.html#defaultout
 
 To read .csv converted data: 
 
