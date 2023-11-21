@@ -16,11 +16,13 @@ VEP (CSQ) outputs: http://www.ensembl.org/info/docs/tools/vep/vep_formats.html#d
 To read .csv converted data: 
 
 ```py
-from utils.utils import get_data
+from utils.utils import get_dataset
 
-df = get_dataset("../data/", samples=["EE_015", "EE_050", "EE_069"], file_types=["default", "genotype", "csq"], option_csq="potential", 
-            options_genotype=["potential", "all"])
+# To get entire dataset
+df = get_dataset("../data/", samples=["EE_015", "EE_050", "EE_069"], file_type="both", option_csq="potential", 
+            options_genotype=["potential", "all"], with_default=True)
 ```
+More examples of loading data: [new_read_test.ipynb](https://github.com/Gho-Ost/pathogenicity-assessment/blob/main/unvcf_tests/new_read_test.ipynb)
 
 ---
 
