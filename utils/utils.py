@@ -181,7 +181,7 @@ def clean_genotype_columns(df_genotype):
 
             coding_impact_cols = ["coding_impact_" + c for c in coding_impact_unique]
 
-            for element, col in zip(cgd_inheritance_unique, coding_impact_cols):
+            for element, col in zip(coding_impact_unique, coding_impact_cols):
                 df_genotype[col] = df_genotype["coding_impact"].apply(lambda x: 1 if element in str(x) else 0)
 
             df_genotype.drop("coding_impact", axis=1, inplace=True)
