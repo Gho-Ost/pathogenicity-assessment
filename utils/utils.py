@@ -78,7 +78,8 @@ def get_dataset(data_folder, samples, file_type, option_csq=None, options_genoty
         df_csq_clean = clean_csq_columns(df_csq_filtered)
 
         # Add target to csq data
-        df_csq_clean["ACMG_class"] = df_genotype["ACMG_class"]
+        if file_type == "csq":
+            df_csq_clean["ACMG_class"] = df_genotype["ACMG_class"]
 
     # Select proper dataframe to be returned
     if file_type == "both":
