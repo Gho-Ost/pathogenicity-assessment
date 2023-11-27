@@ -206,7 +206,10 @@ def get_corr_target(df, target_column, k=20, plot_size = (10, 6)):
     top_columns = correlation_with_ACMG_class.abs().nlargest(k).index
 
     plt.figure(figsize=plot_size)
-    sns.barplot(x=correlation_with_ACMG_class[top_columns], y=top_columns, orient='h', palette='coolwarm')
+    # colors = ['#67a9cf' if c >= 0 else '#ef8a62' for c in correlation_with_ACMG_class[top_columns]]
+    colors = ['#74add1' if c >= 0 else '#f46d43' for c in correlation_with_ACMG_class[top_columns]]
+    
+    sns.barplot(x=correlation_with_ACMG_class[top_columns], y=top_columns, orient='h', palette=colors)
     plt.xlabel(f'Correlation with {target_column}')
     plt.ylabel('Column Name')
     plt.title(f'Correlation of Top {k} Columns with {target_column}')
