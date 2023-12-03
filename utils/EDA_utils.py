@@ -13,7 +13,7 @@ def get_target_plot(df, target):
     Plot proportions of value present in a chosen column
     '''
     plt.figure(figsize=(10, 6))
-    sns.countplot(data=df, x=target, order=df[target].value_counts().index, palette='coolwarm')
+    sns.countplot(data=df, x=target, order=df[target].value_counts().index)
     plt.xlabel(target)
     plt.ylabel('Count')
     plt.title(f'Count of Values in {target}')
@@ -36,7 +36,7 @@ def get_nans_plot(df, nan_threshold = 100000):
     total_rows = len(df)
 
     plt.figure(figsize=(40, 6))
-    plt.bar(columns_with_nans, nan_counts, color='skyblue')
+    plt.bar(columns_with_nans, nan_counts)
     plt.axhline(y=total_rows, color='r', linestyle='--', label='Number of Rows')
     plt.xlabel('Columns')
     plt.ylabel('Count of NaN Values')
@@ -128,7 +128,7 @@ def plot_dtypes(df):
     counts = list(dtype_counts.values())
 
     plt.figure(figsize=(8, 6))
-    plt.bar(data_types, counts, color='skyblue')
+    plt.bar(data_types, counts)
     plt.xlabel('Data Types')
     plt.ylabel('Count')
     plt.title('Counts of Different Data Types')
@@ -230,7 +230,7 @@ def get_mutual_info_plot(df, target_column, k=20, plot_size = (10, 6)):
     top_features = mutual_info_df.head(k)
 
     plt.figure(figsize=plot_size)
-    plt.barh(top_features['Feature'], top_features['Mutual Information'], color='skyblue')
+    plt.barh(top_features['Feature'], top_features['Mutual Information'])
     plt.xlabel('Mutual Information')
     plt.ylabel('Feature')
     plt.title(f'Mutual Information with {target_column} for Top {k} Features')
