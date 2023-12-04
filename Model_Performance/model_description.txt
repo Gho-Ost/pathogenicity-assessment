@@ -1,0 +1,10 @@
+model1 - LightGBM, dataset Encoded - OneHot Nans, Outside Range, MinMax preprocessing, class weights given to the model, default hyperparameters
+model2 - Logistic Regression, dataset Encoded - OneHot Nans, Outside Range, MinMax preprocessing, class weights given to the model, default hyperparameters
+model3 - AdaBoost, dataset Encoded Outside Range, Robust Scaler preprocessing, class weights given to the model, default hyperparameters
+model4 - **Important** This is a regression model, by putting a different threshold for values you can get different results - see notebook. Smallest unweighted MAE. Decision Tree Regresor, MinMax, Default Hyperparameters, Outside Range(encoded_df3) 
+model5 - **Important** This is a regression model, by putting a different threshold for values you can get different results - see notebook. Smallest unweighted MSE. Random Forrest Regressor, MinMax, Default Hyperparameters, One-Hot, median(encoded_df2) 
+model6 - **Important** This is a regression model, by putting a different threshold for values you can get different results - see notebook. Smallest weighted MAE. Decision Tree Regresor, No preprocessing, Default Hyperparameters, Outside Range, One-Hot(encoded_df1) 
+model7 - **Important** This is a regression model, by putting a different threshold for values you can get different results - see notebook. Smallest weighted MSE. Random Forrest Regressor, MinMax, Default Hyperparameters, One-Hot, median(encoded_df2)
+model8 - Smallest MAE, MSE from classifiers, XGBoost, MinMax, default hyperparameters, One-Hot, outside range(encoded_df1)
+model9 - Biggest F1 weighted, Kappa, XGBoost, MinMax, default hyperparameters, , One-Hot median(encoded_df2)
+model10 - Biggest Macro-Recall, Gmean, LightGBM, MinMax, default hyperparameters, One-Hot, outside range(encoded_df1)
