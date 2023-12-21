@@ -3,6 +3,7 @@ Module for custom utility functions.
 """
 
 import pandas as pd
+import numpy as np
 
 from pathlib import Path
 from warnings import warn
@@ -108,6 +109,35 @@ def clean_default_columns(df_default):
     df_default_clean = df_default.drop("FILTER", axis=1)
     return df_default_clean
 
+def _extract_MutationTaster_values(row):
+    # MutationTaster_pred and MutationTaster_score split select in order {A, D, P, N}>0.5 and with highest confidence otherwise highest confidence
+    if row['MutationTaster_pred'] == '0':
+        return pd.Series([np.nan, np.nan], index=["MutationTaster_selected_pred", "MutationTaster_selected_score"])
+
+    symbols = ['A', 'D', 'P', 'N']
+    pred_symbols = row['MutationTaster_pred'].split('%3B')
+    score_values = [float(x) for x in row['MutationTaster_score'].split('%3B')]
+
+    top_score = -1
+    top_symbol = None
+
+    # Check for symbols A, D, P, N with score above 0.5 and select the one with the highest score
+    for symbol in symbols:
+        if symbol in pred_symbols:
+            index_symbol = pred_symbols.index(symbol)
+            selected_symbol = symbol
+            selected_score = score_values[index_symbol]
+            
+            if selected_score >= 0.5:
+                return pd.Series([selected_symbol, selected_score], index=["MutationTaster_selected_pred", "MutationTaster_selected_score"])
+            
+            elif selected_score > top_score:
+                top_score = selected_score
+                top_symbol = selected_symbol
+
+    return pd.Series([top_symbol, top_score], index=["MutationTaster_selected_pred", "MutationTaster_selected_score"])
+    
+
 def clean_genotype_columns(df_genotype):
     """
     Fixes genotype columns with array values.
@@ -120,25 +150,16 @@ def clean_genotype_columns(df_genotype):
 
     # Clean up columns
     for c in separable_columns:
-        # AS_FilterStatus split - Discuss correctness
-        if c == "AS_FilterStatus":
-            as_filter_status_unique = set([])
-            for c in df_genotype["AS_FilterStatus"].unique():
-                if not isinstance(c, float):        
-                    for _c in c.split("|"):
-                        for x in _c.split("%2C"):
-                            as_filter_status_unique.add(x)
-                else:
-                    as_filter_status_unique.add(c)
-
-            as_filter_status_unique = [x for x in as_filter_status_unique if not pd.isna(x)]
-
-            as_filter_status_cols = ["AS_FilterStatus_" + c for c in as_filter_status_unique]
-
-            for filt, col in zip(as_filter_status_unique, as_filter_status_cols):
-                df_genotype[col] = df_genotype["AS_FilterStatus"].apply(lambda x: 1 if filt in str(x) else 0)
-            
-            df_genotype.drop("AS_FilterStatus", axis=1, inplace=True)
+        # MutationTaster_pred and _score
+        if c == "MutationTaster_pred":
+            df_genotype[["MutationTaster_selected_pred", "MutationTaster_selected_score"]] = df_genotype.apply(_extract_MutationTaster_values, axis=1)
+            df_genotype.drop("MutationTaster_pred", axis=1, inplace=True)
+            df_genotype.drop("MutationTaster_score", axis=1, inplace=True)
+        
+        # CGDinheritance split - if '0' then 0 else 1
+        elif c == "CGDinheritance":
+            df_genotype["CGDinheritance_exist"] = df_genotype["CGDinheritance"].apply(lambda x: 1 if x!='0' else 0)
+            df_genotype.drop("CGDinheritance", axis=1, inplace=True)
 
         # function split - take possible results and one hot encode
         elif c == "function":
@@ -149,26 +170,6 @@ def clean_genotype_columns(df_genotype):
                 df_genotype[col] = df_genotype["function"].apply(lambda x: 1 if function in str(x) else 0)
 
             df_genotype.drop("function", axis=1, inplace=True)
-
-        # CGDinheritance split - Discuss correctness
-        elif c == "CGDinheritance":
-            cgd_inheritance_unique = set([])
-            for c in df_genotype["CGDinheritance"].unique():
-                if not isinstance(c, float):        
-                    clean_elem = c.split("%40")[0]
-                    for _c in clean_elem.split("/"):
-                        for __c in _c.split("|"):
-                            cgd_inheritance_unique.add(__c)
-
-                else:
-                    cgd_inheritance_unique.add(c)
-
-            cgd_inheritance_cols = ["CGDinheritance_" + c for c in cgd_inheritance_unique]
-
-            for element, col in zip(cgd_inheritance_unique, cgd_inheritance_cols):
-                df_genotype[col] = df_genotype["CGDinheritance"].apply(lambda x: 1 if element in str(x) else 0)
-
-            df_genotype.drop("CGDinheritance", axis=1, inplace=True)
 
         # coding_impact split - one hot encode for possible values
         elif c == "coding_impact":
@@ -218,19 +219,18 @@ def drop_genotype_columns(df_genotype, options):
     df_genotype.drop("DP", axis=1, inplace=True)
     df_genotype.drop("Gene", axis=1, inplace=True)
     df_genotype.drop("hgvs", axis=1, inplace=True)
+    df_genotype.drop("ClinVarClass", axis=1, inplace=True)
 
-    # Drop MMQ and AMP for 015 and 050 datasets
+    # Drop columns from 015 and 050 datasets
     if "MMQ" in df_genotype.columns:
         df_genotype.drop("MMQ", axis=1, inplace=True)  
+        df_genotype.drop("AS_SB_TABLE", axis=1, inplace=True)
+        df_genotype.drop("AS_FilterStatus", axis=1, inplace=True)
         df_genotype.drop(drop_columns_amp, axis=1, inplace=True)   
-
-    # These columns need further discussion
-    skip_columns = ["MutationTaster_score", "MutationTaster_pred", "ClinVarClass"]
-    df_genotype.drop(skip_columns, axis=1, inplace=True)
 
     # If only important columns should be left
     if options[0] == "important":
-        potential_drop_columns = ["ClinVarClass", "ClinVarDisease", "DANN_score", "MutationTaster_pred", "MutationTaster_score", "SIFT_score"]
+        potential_drop_columns = ["ClinVarDisease", "DANN_score", "MutationTaster_pred", "MutationTaster_score", "SIFT_score"]
         
         # Make sure the columns still exist in the dataset
         potential_drop_columns = [c for c in potential_drop_columns if c in df_genotype.columns]
@@ -238,7 +238,7 @@ def drop_genotype_columns(df_genotype, options):
 
     # If common columns of 015/050 and 069 should be kept
     if options[1] == "common":
-        different_columns = ['AS_FilterStatus', 'AS_SB_TABLE', 'ECNT', 'GERMQ', 'MBQ', 'MFRL', 'MPOS', 'POPAF', 'RPA', 'RU', 'STR', 'STRQ', 'TLOD', 'cosmicFathMMPrediction', 'cosmicFathMMScore']
+        different_columns = ['ECNT', 'GERMQ', 'MBQ', 'MFRL', 'MPOS', 'POPAF', 'RPA', 'RU', 'STR', 'STRQ', 'TLOD', 'cosmicFathMMPrediction', 'cosmicFathMMScore']
         df_genotype.drop(different_columns, axis=1, inplace=True)
 
     return df_genotype
@@ -248,7 +248,7 @@ def clean_csq_columns(df_csq):
     Fixes csq columns with array values.
     """
     # Add other columns here when a process to clean them up is known
-    separable_columns = ["PHENOTYPES", "Exising_variation", "FLAGS", "PUBMED", "SIFT", "PolyPhen"]
+    separable_columns = ["PHENOTYPES", "CLIN_SIG", "HGNC_ID", "Existing_variation", "FLAGS", "PUBMED", "SIFT", "PolyPhen"]
 
     # Take undropped columns
     separable_columns = [c for c in separable_columns if c in df_csq.columns]
@@ -256,17 +256,12 @@ def clean_csq_columns(df_csq):
     # Clean up columns
     for c in separable_columns:
         # PHENOTYPES split - test if a value exist in the cell
-        if c == "PHENOTYPES" or c == "PUBMED":
+        if c == "PHENOTYPES" or c == "PUBMED" or c == "CLIN_SIG" or c == "HGNC_ID":
             df_csq[f"{c}_exist"] = df_csq[c].apply(lambda x: 1 if pd.notna(x) else 0)
             df_csq.drop(c, axis=1, inplace=True)
         
-        # PUBMED - test if a value exist in the cell
-        elif c == "PUBMED":
-            df_csq["PUBMED_exist"] = df_csq["PUBMED"].apply(lambda x: 1 if pd.notna(x) else 0)
-            df_csq.drop("PUBMED", axis=1, inplace=True)
-
-        # Exising_variation - split on: exists in COSV/rs
-        elif c == "Exising_variation":
+        # Existing_variation - split on: exists in COSV/rs
+        elif c == "Existing_variation":
             existing_var_unique = set([])
             for c in df_csq["Existing_variation"].unique():
                 if not isinstance(c, float):
@@ -306,24 +301,21 @@ def drop_csq_columns(df_csq, option):
     # Drop the unnecessary columns
     drop_columns = ["TSL", "APPRIS", "CCDS", "ENSP", "SWISSPROT", "TREMBL", "UNIPARC", "UNIPROT_ISOFORM", "REFSEQ_MATCH", "Gene",
                 "SOURCE", "REFSEQ_OFFSET", "GIVEN_REF", "USED_REF", "BAM_EDIT", "DOMAINS", "HGVS_OFFSET", "AF", "AFR_AF",
-                "AMR_AF", "EAS_AF", "EUR_AF", "SAS_AF", "cDNA_position", "CDS_position", "Protein_position", "HGVSp", "TRANSCRIPTION_FACTORS"]
-
+                "AMR_AF", "EAS_AF", "EUR_AF", "SAS_AF", "cDNA_position", "CDS_position", "Protein_position", "HGVSp", "Consequence",
+                "TRANSCRIPTION_FACTORS", "SOMATIC", "PHENO", "VAR_SYNONYMS"]
+    
     drop_columns_gnomad = [c for c in df_csq if c.startswith("gnomAD") and (c!="gnomADe_AF" and c!="gnomADg_AF")]
 
     df_csq.drop(drop_columns, axis=1, inplace=True)
     df_csq.drop(drop_columns_gnomad, axis=1, inplace=True)
 
-    # These columns are not yet confirmed to be dropped/processed
-    drop_columns2 = ["SOMATIC", "PHENO", "CLIN_SIG", "Consequence", "HGNC_ID"]
-    df_csq.drop(drop_columns2, axis=1, inplace=True)
-
     # If only important columns should be evaluated
     if option == "important":
-        potential_drop_columns = ["Consequence", "IMPACT", "CANONICAL", "MANE_SELECT", "MANE_PLUS_CLINICAL", "SIFT", "PolyPhen",
+        potential_drop_columns = ["IMPACT", "CANONICAL", "SYMBOL", "MANE_SELECT", "MANE_PLUS_CLINICAL", "SIFT", "PolyPhen",
                           "CLIN_SIG", "EVE_CLASS", "EVE_SCORE", "CADD_PHRED", "CADD_RAW", "LOEUF", "NMD", "SpliceAI_pred_DP_AG",
                           "SpliceAI_pred_DP_AL", "SpliceAI_pred_DP_DG", "SpliceAI_pred_DP_DL", "SpliceAI_pred_DS_AG",
                           "SpliceAI_pred_DS_AL", "SpliceAI_pred_DS_DG", "SpliceAI_pred_DS_DL", "SpliceAI_pred_SYMBOL", "FLAGS"]
-        
+
         # Make sure the columns are not yet dropped
         potential_drop_columns = [c for c in potential_drop_columns if c in df_csq.columns]
         
