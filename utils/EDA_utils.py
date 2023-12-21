@@ -6,6 +6,8 @@ from sklearn.feature_selection import mutual_info_classif
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+from matplotlib.patches import Patch
 
 
 def get_target_plot(df, target):
@@ -235,3 +237,38 @@ def get_mutual_info_plot(df, target_column, k=20, plot_size = (10, 6)):
     plt.ylabel('Feature')
     plt.title(f'Mutual Information with {target_column} for Top {k} Features')
     plt.show()
+
+def get_confusion_matrix_plot(y_test, y_pred, class_names_mapping, plot_size = (8, 5), fancy=True):
+    if fancy:
+        confusion = confusion_matrix(y_test, y_pred, labels=range(len(class_names_mapping)))
+
+        # Calculate row-normalized confusion matrix
+        confusion_normalized = confusion.astype('float') / confusion.sum(axis=1)[:, np.newaxis]
+
+        # Set up the class names for the legend
+        class_names = ['B', 'LB', 'US', 'LP', 'P']
+
+        plt.figure(figsize=plot_size)
+        sns.heatmap(confusion_normalized, annot=True, fmt=".2%", cmap="Blues",
+                    xticklabels=class_names, yticklabels=class_names, cbar=False)  # Remove color bar
+
+        # Create legend patches
+        legend_patches = [Patch(color=sns.color_palette("Blues")[i], label=f"{class_names[i]}: {class_names_mapping[i]}")
+                        for i in range(len(class_names_mapping))]
+
+        # Add legend outside the plot
+        plt.legend(handles=legend_patches, title='Class Legend', loc='upper left', bbox_to_anchor=(1, 1))
+
+        plt.xlabel('Predicted')
+        plt.ylabel('Actual')
+        plt.title('Normalized Confusion Matrix')
+        plt.show()
+
+    else:
+        confusion = confusion_matrix(y_test, y_pred)
+        plt.figure(figsize = plot_size)
+        sns.heatmap(confusion, annot=True, fmt="d", cmap="Blues", xticklabels=[class_names_mapping[i] for i in range(len(class_names_mapping))], yticklabels=[class_names_mapping[i] for i in range(len(class_names_mapping))])
+        plt.xlabel('Predicted')
+        plt.ylabel('Actual')
+        plt.title('Confusion Matrix')
+        plt.show()
