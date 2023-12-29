@@ -107,6 +107,24 @@ def clean_default_columns(df_default):
         df_default[f_col] = df_default['FILTER'].apply(lambda x: 1 if f_val in x else 0)
 
     df_default_clean = df_default.drop("FILTER", axis=1)
+
+    # Add relative POS
+    chromosome_lengths = [0, 16569, 248956422, 242193529, 198295559, 190214555, 181538259, 170805979, 159345973, 
+                      145138636, 138394717, 133797422, 135086622, 133275309, 114364328, 107043718, 101991189, 
+                      90338345, 83257441, 80373285, 58617616, 64444167, 46709983, 50818468, 156040895]
+    summed_lengths = np.cumsum(chromosome_lengths, dtype=np.int64)
+
+    chromosome_names = [f"chr{i}" for i in range(0, 23)]
+    chromosome_names[0] = "chrM"
+    chromosome_names.append("chrX")
+    chromosome_names.append("chrY")
+
+    chromosome_lengths_dict = dict([n, l] for n, l in zip(chromosome_names, summed_lengths))
+    df_default_clean['POS_REL'] = df_default_clean.apply(lambda row: row['POS'] + chromosome_lengths_dict.get(row['#CHROM'], 0), axis=1)
+
+    # NaNs in unusual chromosomes POS_REL
+    df_default_clean.loc[~df_default_clean['#CHROM'].isin(chromosome_names), 'POS_REL'] = np.nan
+
     return df_default_clean
 
 def _extract_MutationTaster_values(row):
@@ -256,7 +274,7 @@ def clean_csq_columns(df_csq):
     # Clean up columns
     for c in separable_columns:
         # PHENOTYPES split - test if a value exist in the cell
-        if c == "PHENOTYPES" or c == "PUBMED" or c == "CLING_SIG" or c == "HGNC_ID":
+        if c == "PHENOTYPES" or c == "PUBMED" or c == "CLIN_SIG" or c == "HGNC_ID":
             df_csq[f"{c}_exist"] = df_csq[c].apply(lambda x: 1 if pd.notna(x) else 0)
             df_csq.drop(c, axis=1, inplace=True)
         
