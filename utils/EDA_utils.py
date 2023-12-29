@@ -239,6 +239,24 @@ def get_mutual_info_plot(df, target_column, k=20, plot_size = (10, 6)):
     plt.show()
 
 def get_confusion_matrix_plot(y_test, y_pred, class_names_mapping, plot_size = (8, 5), fancy=True):
+    '''
+Generate and plot a confusion matrix for classification model evaluation.
+
+Parameters:
+- y_test (array-like): True labels of the test set.
+- y_pred (array-like): Predicted labels of the test set.
+- class_names_mapping (dict): A mapping of class indices to their corresponding names.
+- plot_size (tuple, optional): Size of the plot, default is (8, 5).
+- fancy (bool, optional): If True, plot a normalized confusion matrix with legend patches, default is True.
+
+Returns:
+- None: Displays the confusion matrix plot.
+
+Example:
+```python
+class_names_mapping = {0: 'ClassA', 1: 'ClassB', 2: 'ClassC'}
+get_confusion_matrix_plot(y_test, y_pred, class_names_mapping)
+'''
     if fancy:
         confusion = confusion_matrix(y_test, y_pred, labels=range(len(class_names_mapping)))
 
@@ -272,3 +290,36 @@ def get_confusion_matrix_plot(y_test, y_pred, class_names_mapping, plot_size = (
         plt.ylabel('Actual')
         plt.title('Confusion Matrix')
         plt.show()
+        
+
+def compare_classes(df, attributes, fig_size=(10, 15)):
+    '''
+Create a box plot for each specified attribute, comparing values across different ACMG classes.
+
+Parameters:
+- df (DataFrame): The DataFrame containing the data.
+- attributes (list): List of attributes (columns) to compare.
+- fig_size (tuple, optional): Size of the entire plot, default is (10, 15).
+
+Returns:
+- None: Displays the box plots for each attribute.
+
+Example:
+```python
+compare_classes(df, ['gnomADg_AF', 'Existing_variation_rs', 'FILTER_clustered_events'], fig_size=(12, 18))
+'''
+    sns.set(style="whitegrid")
+    plt.figure(figsize=fig_size)
+
+    for i, attribute in enumerate(attributes, 1):
+        plt.subplot(len(attributes), 1, i)
+        sns.boxplot(x='ACMG_class', y=attribute, data=df)
+        plt.title(f'Box plot for {attribute} by ACMG class')
+
+        if i < len(attributes):
+            plt.xlabel('')
+    plt.subplot(len(attributes), 1, len(attributes))
+    plt.xlabel('ACMG Class')
+
+    plt.tight_layout()
+    plt.show()
