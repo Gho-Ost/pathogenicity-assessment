@@ -1,0 +1,9 @@
+model1 - AdaBoost with dataset Encoded - OneHot Nans, Outside Range and preprocessing MinMax
+model2 - Logistic Regression with dataset Encoded - OneHot Nans, Outside Range and preprocessing MinMax
+model3 - AdaBoost with dataset Encoded - OneHot Nans, Median and preprocessing MinMax
+model4 - Logistic Regression with dataset Encoded - OneHot Nans, Median and preprocessing MinMax
+model5 - AdaBoost with dataset Encoded - Outside Range and preprocessing MinMax
+model6 - Logistic Regression with dataset Encoded - Outside Range and preprocessing MinMax
+model7 - AdaBoost with dataset Encoded - OneHot Nans, Outside Range and preprocessing Robust
+model8 - CatBoost with dataset Encoded - Outside Range and preprocessing MinMax
+model9 - Logistic Regression with dataset Encoded - OneHot Nans, Outside Range and preprocessing Robust
