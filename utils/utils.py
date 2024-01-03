@@ -204,8 +204,7 @@ def clean_genotype_columns(df_genotype):
             for element, col in zip(coding_impact_unique, coding_impact_cols):
                 df_genotype[col] = df_genotype["coding_impact"].apply(lambda x: 1 if element in str(x) else 0)
 
-            df_genotype.drop("coding_impact", axis=1, inplace=True)
-
+            df_genotype.drop("coding_impact", axis=1, inplace=True) 
     return df_genotype
 
 def drop_genotype_columns(df_genotype, options):

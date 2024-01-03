@@ -356,7 +356,7 @@ def get_sample_data(sample_folder_path, file_types=None):
     df = pd.concat([EE_015, EE_050, EE_069], ignore_index=True, axis=0)
     """
 
-    warn("This function is depracated watch out for changes in columns")
+    warn("This function is depracated watch out for changes in columns") 
 
     types = ["default", "csq", "genotype"]
     samples = ["EE_015", "EE_050", "EE_069"]
