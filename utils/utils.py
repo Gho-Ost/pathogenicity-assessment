@@ -187,7 +187,7 @@ def clean_genotype_columns(df_genotype):
             for function, col in zip(functions, function_cols):
                 df_genotype[col] = df_genotype["function"].apply(lambda x: 1 if function in str(x) else 0)
 
-            df_genotype.drop("function", axis=1, inplace=True)
+            df_genotype.drop("function", axis=1, inplace=True) 
 
         # coding_impact split - one hot encode for possible values
         elif c == "coding_impact":
