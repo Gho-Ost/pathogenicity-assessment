@@ -319,7 +319,7 @@ def drop_csq_columns(df_csq, option):
     # Drop the unnecessary columns
     drop_columns = ["TSL", "APPRIS", "CCDS", "ENSP", "SWISSPROT", "TREMBL", "UNIPARC", "UNIPROT_ISOFORM", "REFSEQ_MATCH", "Gene",
                 "SOURCE", "REFSEQ_OFFSET", "GIVEN_REF", "USED_REF", "BAM_EDIT", "DOMAINS", "HGVS_OFFSET", "AF", "AFR_AF",
-                "AMR_AF", "EAS_AF", "EUR_AF", "SAS_AF", "cDNA_position", "CDS_position", "Protein_position", "HGVSp", "Consequence",
+                "AMR_AF", "EAS_AF", "EUR_AF", "SAS_AF", "cDNA_position", "CDS_position", "Protein_position", "HGVSp", "HGVSc", "Consequence",
                 "TRANSCRIPTION_FACTORS", "SOMATIC", "PHENO", "VAR_SYNONYMS"]
     
     drop_columns_gnomad = [c for c in df_csq if c.startswith("gnomAD") and (c!="gnomADe_AF" and c!="gnomADg_AF")]
